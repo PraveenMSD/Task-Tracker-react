@@ -4,6 +4,7 @@ import Tasks from './components/Tasks'
 import AddTask from './components/AddTask'
 
 const App = () => {
+  const [showAddTask, setShowAddtask] = useState(false)
   const [tasks, setTasks] = useState([
     {
       id: 1,
@@ -45,10 +46,12 @@ const App = () => {
     setTasks(tasks.map((task) => task.id === id ? {...task, reminder: !task.reminder} : task))
   }
 
+  // && is a ternary operator
+
   return (
     <div className="container">
-      <Header />
-      <AddTask onAdd={addTask}/>
+      <Header onAdd = {() => setShowAddtask(!showAddTask) }/>
+      {showAddTask && <AddTask onAdd={addTask}/>}  
       {tasks.length > 0 ? (<Tasks tasks={tasks} onDelete={deleteTask} onToggle={toggleReminder} />
       ):(
         'No Task to Show!'
